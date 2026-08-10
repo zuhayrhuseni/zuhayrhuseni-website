@@ -23,6 +23,9 @@ test("server-renders Zuhayr's portfolio shell", async () => {
   assert.match(html, /<title>Zuhayr Huseni - Software engineer<\/title>/i);
   assert.match(html, /Software engineer working across payments, AI, and developer infrastructure/i);
   assert.match(html, /About me\./i);
+  assert.match(html, /full-stack products[\s\S]*AI-powered CRM automation/i);
+  assert.match(html, /sales automation software for an industrial engineering company/i);
+  assert.doesNotMatch(html, /manufacturing software/i);
   assert.match(html, /traveled to 35 countries/i);
   assert.match(html, /French horn in a concert band/i);
   assert.match(html, /Greater Boston area[\s\S]*San Francisco Bay Area/i);

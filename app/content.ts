@@ -35,14 +35,14 @@ export const identity = {
 
 export const hero = {
   headline: "Software engineer working across payments, AI, and developer infrastructure.",
-  dek: "At PayPal, I build distributed compliance systems and internal developer tools. My experience also includes 5G research, machine learning, and full-stack products.",
+  dek: "At PayPal, I build distributed compliance systems and internal developer tools. My earlier work includes full-stack products, machine learning, and AI-powered CRM automation.",
 };
 
 export const about = {
   title: "About me.",
   paragraphs: [
     "Originally from the Greater Boston area, I now live in the San Francisco Bay Area. I am a software engineer at PayPal focused on distributed compliance systems and internal developer tools.",
-    "Before PayPal, I worked in 5G research, manufacturing software, machine learning, and full-stack product development. I learn new domains quickly and like work that spans infrastructure, backend systems, and product interfaces. I am especially interested in startups and established technology companies working on AI infrastructure, developer tools, and human-computer interaction.",
+    "Before PayPal, I worked on full-stack products, machine-learning services, AI-powered CRM automation, and sales automation software for an industrial engineering company. I also conducted 5G systems research. I learn new domains quickly and like work that spans infrastructure, backend systems, and product interfaces. I am especially interested in startups and established technology companies working on AI infrastructure, developer tools, and human-computer interaction.",
   ],
   interests: [
     "AI infrastructure",

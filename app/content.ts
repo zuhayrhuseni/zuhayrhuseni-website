@@ -42,7 +42,7 @@ export const about = {
   title: "About me.",
   paragraphs: [
     "Originally from the Greater Boston area, I now live in the San Francisco Bay Area. I am a software engineer at PayPal focused on distributed compliance systems and internal developer tools.",
-    "Before PayPal, I worked on full-stack products, machine-learning services, AI-powered CRM automation, and sales automation software for an industrial engineering company. I also conducted 5G systems research. I learn new domains quickly and like work that spans infrastructure, backend systems, and product interfaces. I am especially interested in startups and established technology companies working on AI infrastructure, developer tools, and human-computer interaction.",
+    "Before PayPal, I built full-stack products and machine-learning services, including AI-powered CRM automation. I also developed sales automation software for an industrial engineering company and conducted research in 5G systems. I learn new domains quickly and enjoy work that connects infrastructure and backend systems with product interfaces, especially at startups and established technology companies working on AI infrastructure, developer tools, and human-computer interaction.",
   ],
   interests: [
     "AI infrastructure",

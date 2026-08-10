@@ -57,11 +57,17 @@ test("keeps content typed and removes the starter preview", async () => {
   assert.match(content, /company: "Forms \+ Surfaces"[\s\S]*id: "uconn"/);
   assert.match(page, /<Portfolio \/>/);
   assert.match(layout, /Zuhayr Huseni - Software engineer/);
-  assert.match(layout, /favicon\.svg\?v=2/);
+  assert.match(layout, /favicon\.svg\?v=3/);
+  assert.match(layout, /favicon-32x32\.png\?v=3/);
+  assert.match(layout, /favicon\.ico\?v=3/);
+  assert.match(layout, /apple-touch-icon\.png\?v=3/);
   assert.match(styles, /prefers-reduced-motion: reduce/);
   assert.doesNotMatch(styles, /\.stack-row|\.metric-band|architecture-stage/);
   assert.doesNotMatch(packageJson, /react-loading-skeleton/);
   await assert.rejects(access(new URL("../app/_sites-preview/SkeletonPreview.tsx", import.meta.url)));
   await access(new URL("../public/Zuhayr-Huseni-Resume.pdf", import.meta.url));
+  await access(new URL("../public/favicon-32x32.png", import.meta.url));
+  await access(new URL("../public/favicon.ico", import.meta.url));
+  await access(new URL("../public/apple-touch-icon.png", import.meta.url));
   await access(new URL("../public/brands/propel-flow.png", import.meta.url));
 });

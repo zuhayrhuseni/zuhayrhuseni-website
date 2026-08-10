@@ -9,6 +9,7 @@ import {
   useRef,
   useState,
   type KeyboardEvent,
+  type PointerEvent,
 } from "react";
 import {
   coursework,
@@ -307,6 +308,8 @@ function AgentTopology() {
 }
 
 function NetworkPlot() {
+  const [sample, setSample] = useState<{ x: number; y: number } | null>({ x: 490, y: 112 });
+  const firstTrace = useRef<SVGPathElement>(null);
   const traces = useMemo(() => [
     { name: "A", color: "trace-a", d: "M45 142 C95 130 115 77 164 92 S232 159 290 117 S371 62 430 83 S518 150 575 101 S672 59 725 88 S806 148 875 72" },
     { name: "B", color: "trace-b", d: "M45 122 C105 91 140 139 190 113 S278 59 325 96 S402 153 470 111 S559 74 613 116 S716 147 768 108 S836 83 875 99" },
@@ -314,9 +317,44 @@ function NetworkPlot() {
     { name: "D", color: "trace-d", d: "M45 98 C89 115 133 49 183 75 S280 130 334 82 S432 56 480 92 S573 119 633 75 S724 49 782 77 S846 112 875 56" },
   ], []);
 
+  const moveSample = (event: PointerEvent<HTMLDivElement>) => {
+    const rect = event.currentTarget.getBoundingClientRect();
+    const x = Math.min(875, Math.max(45, ((event.clientX - rect.left) / rect.width) * 920));
+    const path = firstTrace.current;
+    if (!path) return;
+    const point = path.getPointAtLength(((x - 45) / 830) * path.getTotalLength());
+    setSample({ x: point.x, y: point.y });
+  };
+
+  const nudgeSample = (event: KeyboardEvent<HTMLElement>) => {
+    if (!["ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key)) return;
+    event.preventDefault();
+    const x = event.key === "Home"
+      ? 45
+      : event.key === "End"
+        ? 875
+        : Math.min(875, Math.max(45, (sample?.x ?? 490) + (event.key === "ArrowRight" ? 28 : -28)));
+    const path = firstTrace.current;
+    if (!path) return;
+    const point = path.getPointAtLength(((x - 45) / 830) * path.getTotalLength());
+    setSample({ x: point.x, y: point.y });
+  };
+
   return (
     <figure className="instrument-card network-figure reveal" aria-labelledby="network-caption" data-magnetic data-cursor="SCRUB">
       <div className="figure-topline"><span>5G / NORMALIZED THROUGHPUT</span><span>4 INTERFACES</span></div>
+      <div
+        className="plot-interaction"
+        role="slider"
+        tabIndex={0}
+        aria-label="Sample the normalized 5G throughput plot"
+        aria-valuemin={0}
+        aria-valuemax={60}
+        aria-valuenow={Math.round((((sample?.x ?? 45) - 45) / 830) * 60)}
+        aria-valuetext={`Run ${Math.round((((sample?.x ?? 45) - 45) / 830) * 60)}`}
+        onKeyDown={nudgeSample}
+        onPointerMove={moveSample}
+      >
       <svg viewBox="0 0 920 240" role="img" aria-label="Normalized throughput traces for four 5G open-air interfaces">
         <defs>
           <pattern id="plot-grid" width="55" height="36" patternUnits="userSpaceOnUse">
@@ -326,17 +364,60 @@ function NetworkPlot() {
         <rect x="45" y="24" width="830" height="180" fill="url(#plot-grid)" className="plot-grid" />
         <line x1="45" y1="204" x2="875" y2="204" className="plot-axis" />
         <line x1="45" y1="24" x2="45" y2="204" className="plot-axis" />
-        {traces.map((trace) => <path key={trace.name} d={trace.d} className={`plot-line ${trace.color}`} />)}
+        {traces.map((trace, index) => <path ref={index === 0 ? firstTrace : undefined} key={trace.name} d={trace.d} className={`plot-line ${trace.color}`} />)}
+        {sample && (
+          <g className="plot-sample" aria-hidden="true">
+            <line x1={sample.x} y1="24" x2={sample.x} y2="204" />
+            <rect x={Math.min(sample.x + 10, 750)} y={Math.max(30, sample.y - 44)} width="116" height="34" />
+            <text x={Math.min(sample.x + 20, 760)} y={Math.max(51, sample.y - 23)}>RUN {Math.round(((sample.x - 45) / 830) * 60).toString().padStart(2, "0")}</text>
+            <rect className="plot-sample-point" x={sample.x - 5} y={sample.y - 5} width="10" height="10" />
+          </g>
+        )}
         <g className="plot-labels">
           <text x="8" y="31">HIGH</text><text x="14" y="207">LOW</text>
           <text x="45" y="228">RUN 00</text><text x="815" y="228">RUN 60</text>
         </g>
       </svg>
+      </div>
       <div className="plot-legend">
         {traces.map((trace) => <span key={trace.name}><i className={trace.color} />Interface {trace.name}</span>)}
       </div>
       <figcaption id="network-caption">FIG 04 / Four normalized interface traces show the live comparison method; exact benchmark values were not supplied and are intentionally not invented here.</figcaption>
     </figure>
+  );
+}
+
+const queryStages = [
+  ["INGEST", "Scrapers", "multi-source"],
+  ["STORE", "SQLite", "normalized"],
+  ["QUERY", "Plain language", "request"],
+  ["OPTIMIZE", "SQL", "generated"],
+  ["RESULTS", "Listings", "ranked"],
+] as const;
+
+function QueryPipeline() {
+  const [active, setActive] = useState(2);
+
+  const scrub = (event: PointerEvent<HTMLDivElement>) => {
+    const rect = event.currentTarget.getBoundingClientRect();
+    const next = Math.min(queryStages.length - 1, Math.max(0, Math.floor(((event.clientX - rect.left) / rect.width) * queryStages.length)));
+    setActive(next);
+  };
+
+  return (
+    <div className="query-pipeline" onPointerMove={scrub}>
+      <div className="query-stages" aria-label="Housing search data pipeline">
+        {queryStages.map(([label, title, detail], index) => (
+          <button key={label} type="button" aria-pressed={active === index} onFocus={() => setActive(index)} onClick={() => setActive(index)}>
+            <span>{label}</span><strong>{title}</strong><small>{detail}</small>
+          </button>
+        ))}
+      </div>
+      <div className="query-route" aria-hidden="true"><i style={{ width: `${((active + 0.5) / queryStages.length) * 100}%` }} /></div>
+      <div className="query-capabilities" aria-label="Project capabilities">
+        <span>Authentication</span><span>Favorites</span><span>Comparisons</span><span>Commute-time visualization</span>
+      </div>
+    </div>
   );
 }
 
@@ -592,14 +673,15 @@ export function Portfolio() {
 
         <section className="section project-section" id="project" aria-labelledby="project-title">
           <SectionHeader index="04" label="PROJECT" title="A common query layer for fragmented housing data." />
-          <a className="project-card reveal" href={project.url} target="_blank" rel="noreferrer" data-magnetic data-cursor="GITHUB">
-            <div className="project-topline"><span>{project.period}</span><span>OPEN REPOSITORIES ↗</span></div>
+          <article className="project-card reveal">
+            <div className="project-topline"><span>{project.period}</span><a href={project.url} target="_blank" rel="noreferrer" data-magnetic data-cursor="GITHUB">OPEN REPOSITORIES ↗</a></div>
             <div className="project-main">
               <div><p>ONESTOP / 01</p><h3 id="project-title">{project.name}</h3></div>
               <div><strong>{project.thesis}</strong><p>{project.description}</p></div>
             </div>
+            <QueryPipeline />
             <div className="inline-stack">{project.stack.map((item) => <span key={item}>{item}</span>)}</div>
-          </a>
+          </article>
         </section>
 
         <section className="section education-section" id="education" aria-labelledby="education-title">
@@ -632,7 +714,7 @@ export function Portfolio() {
         <section className="contact-section" id="contact" aria-labelledby="contact-title">
           <div className="contact-grid-overlay" aria-hidden="true" />
           <p className="section-index">07 / CONTACT</p>
-          <h2 id="contact-title">Have a difficult system?<br />Let&apos;s find the signal.</h2>
+          <h2 id="contact-title">Have a difficult system?<br />Let&apos;s find the signal<span className="signal-period">.</span></h2>
           <CopyEmailButton />
           <div className="contact-links">
             <a href={identity.linkedin} target="_blank" rel="noreferrer" data-magnetic data-cursor="OPEN">LinkedIn ↗</a>

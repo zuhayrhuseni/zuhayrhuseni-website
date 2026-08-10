@@ -1,6 +1,6 @@
 import { Portfolio } from "./portfolio";
 import { hero, identity } from "./content";
-import { CursorReticle, SignalTrace } from "./hero-interactions";
+import { CursorReticle, ScrollRail, SignalTrace } from "./hero-interactions";
 
 const navItems = [
   ["Now", "#now"],
@@ -15,6 +15,7 @@ export default function Home() {
     <>
       <a className="skip-link" href="#main">Skip to content</a>
       <CursorReticle />
+      <ScrollRail />
       <header className="site-header">
         <a href="#top" className="wordmark" data-magnetic data-cursor="TOP" aria-label="ZH, Zuhayr Huseni, back to top">
           <span>ZH</span><b>Zuhayr Huseni</b>
@@ -28,9 +29,8 @@ export default function Home() {
       <main id="main">
         <section className="hero" id="top" aria-labelledby="hero-title">
           <div className="hero-copy">
-            <p className="hero-kicker">{hero.eyebrow}</p>
             <h1 className="hero-title" id="hero-title">
-              {hero.headline.split(" ").map((word, index) => <span key={`${word}-${index}`}><i>{word}</i></span>)}
+              {hero.headline.replace(/\.$/, "")}<b className="signal-period">.</b>
             </h1>
             <div className="hero-bottom">
               <p className="hero-dek">{hero.dek}</p>

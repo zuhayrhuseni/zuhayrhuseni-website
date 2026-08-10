@@ -1,6 +1,69 @@
 "use client";
 
-import { useEffect, useRef, type PointerEvent } from "react";
+import { useEffect, useRef, useState, type PointerEvent } from "react";
+
+const railSections = [
+  ["01", "now", "Now"],
+  ["02", "experience", "Experience"],
+  ["03", "work", "Selected work"],
+  ["04", "project", "Project"],
+  ["05", "education", "Education"],
+  ["06", "stack", "Stack"],
+  ["07", "contact", "Contact"],
+] as const;
+
+export function ScrollRail() {
+  const [progress, setProgress] = useState(0);
+  const [active, setActive] = useState("now");
+
+  useEffect(() => {
+    let frame = 0;
+    const update = () => {
+      const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+      setProgress(scrollable > 0 ? Math.min(100, Math.max(0, (window.scrollY / scrollable) * 100)) : 0);
+      frame = 0;
+    };
+    const onScroll = () => {
+      if (!frame) frame = requestAnimationFrame(update);
+    };
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+        if (visible?.target.id) setActive(visible.target.id);
+      },
+      { rootMargin: "-28% 0px -55% 0px", threshold: [0, 0.1, 0.35] },
+    );
+    railSections.forEach(([, id]) => {
+      const node = document.getElementById(id);
+      if (node) observer.observe(node);
+    });
+
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      if (frame) cancelAnimationFrame(frame);
+      observer.disconnect();
+    };
+  }, []);
+
+  return (
+    <aside className="scroll-rail" aria-label="Page sections">
+      <span className="scroll-percent">{Math.round(progress).toString().padStart(2, "0")}%</span>
+      <div className="scroll-track" aria-hidden="true"><i style={{ height: `${progress}%` }} /></div>
+      <ol>
+        {railSections.map(([index, id, label]) => (
+          <li key={id} data-active={active === id ? "true" : "false"}>
+            <a href={`#${id}`} aria-label={`Go to ${label}`}><span>{index}</span></a>
+          </li>
+        ))}
+      </ol>
+    </aside>
+  );
+}
 
 export function CursorReticle() {
   const cursor = useRef<HTMLDivElement>(null);
@@ -61,6 +124,9 @@ export function CursorReticle() {
 export function SignalTrace() {
   const svgRef = useRef<SVGSVGElement>(null);
   const pathRef = useRef<SVGPathElement>(null);
+  const sampleRef = useRef<SVGGElement>(null);
+  const sampleTextRef = useRef<SVGTextElement>(null);
+  const liveRef = useRef<HTMLSpanElement>(null);
   const pointer = useRef({ x: -1000, active: false });
 
   useEffect(() => {
@@ -96,17 +162,30 @@ export function SignalTrace() {
 
   const trackPointer = (event: PointerEvent<SVGSVGElement>) => {
     const rect = event.currentTarget.getBoundingClientRect();
-    pointer.current = {
-      x: ((event.clientX - rect.left) / rect.width) * 1000,
-      active: true,
-    };
+    const x = Math.min(992, Math.max(8, ((event.clientX - rect.left) / rect.width) * 1000));
+    pointer.current = { x, active: true };
+    const path = pathRef.current;
+    const sample = sampleRef.current;
+    if (path && sample) {
+      const point = path.getPointAtLength((x / 1000) * path.getTotalLength());
+      sample.style.opacity = "1";
+      sample.style.transform = `translate(${point.x}px, ${point.y}px)`;
+      if (sampleTextRef.current) sampleTextRef.current.textContent = `${Math.round(point.y * 3.2)} ms`;
+      if (liveRef.current) liveRef.current.textContent = `SAMPLE / X ${Math.round(x).toString().padStart(4, "0")}`;
+    }
+  };
+
+  const stopTracking = () => {
+    pointer.current.active = false;
+    if (sampleRef.current) sampleRef.current.style.opacity = "0";
+    if (liveRef.current) liveRef.current.textContent = "LIVE / MOVE TO SAMPLE";
   };
 
   return (
     <div className="signal-shell" data-magnetic data-cursor="SCRUB">
       <div className="signal-readout" aria-hidden="true">
         <span>TRACE / ZH-01</span>
-        <span>LIVE</span>
+        <span ref={liveRef}>LIVE / MOVE TO SAMPLE</span>
       </div>
       <svg
         ref={svgRef}
@@ -115,7 +194,7 @@ export function SignalTrace() {
         role="img"
         aria-label="A live signal trace that responds to pointer movement"
         onPointerMove={trackPointer}
-        onPointerLeave={() => { pointer.current.active = false; }}
+        onPointerLeave={stopTracking}
       >
         <defs>
           <pattern id="hero-grid" width="40" height="40" patternUnits="userSpaceOnUse">
@@ -125,6 +204,12 @@ export function SignalTrace() {
         <rect width="1000" height="260" fill="url(#hero-grid)" className="trace-grid" />
         <line x1="0" y1="132" x2="1000" y2="132" className="trace-axis" />
         <path ref={pathRef} className="trace-line" d="" />
+        <g ref={sampleRef} className="trace-sample" aria-hidden="true">
+          <line x1="0" y1="-145" x2="0" y2="125" />
+          <rect x="11" y="-37" width="94" height="28" />
+          <text ref={sampleTextRef} x="20" y="-19">000 ms</text>
+          <rect className="trace-sample-point" x="-5" y="-5" width="10" height="10" />
+        </g>
         <g className="trace-markers" aria-hidden="true">
           <circle cx="170" cy="109" r="4" />
           <circle cx="480" cy="126" r="4" />

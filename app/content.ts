@@ -44,7 +44,13 @@ export const about = {
     "I am a software engineer at PayPal focused on distributed compliance systems and internal developer tools. Before PayPal, I worked in 5G research, manufacturing software, machine learning, and full-stack product development.",
     "I learn new domains quickly and like work that spans infrastructure, backend systems, and product interfaces. I am especially interested in startups and established technology companies working on AI infrastructure, developer tools, and human-computer interaction.",
   ],
-  interests: ["AI infrastructure", "Developer tools", "Human-computer interaction", "Distributed systems"],
+  interests: [
+    "AI infrastructure",
+    "Human-computer interaction",
+    "Developer tools",
+    "AI-native marketing",
+    "Distributed systems",
+  ],
   personal: [
     "Outside work, I enjoy playing basketball and have traveled to 35 countries. I also played French horn in a concert band.",
     "I have tried a wide range of side projects and hobbies, including YouTube channels, app development, and skiing.",
@@ -182,7 +188,8 @@ export const experiences: Experience[] = [
     period: "February 2024 - April 2024",
     location: "Hood River, OR · Remote",
     url: "https://www.linkedin.com/company/propel-flow/",
-    monogram: "PF",
+    logo: "/brands/propel-flow.png",
+    logoAlt: "Propel Flow",
     summary:
       "I deployed machine-learning services and improved retrieval for financial recommendation pipelines.",
     highlights: [
@@ -232,7 +239,7 @@ export const project = {
   url: "https://github.com/jmedrek1/uconn-senior-design",
   title: "One search surface for fragmented housing data.",
   description:
-    "I built scalable scrapers that normalized housing listings into SQLite, then added an OpenAI-backed layer that translated plain-language requests into optimized SQL. The product included authentication, favorites, comparisons, and commute-time visualization.",
+    "We built this for the University of Connecticut, using scalable scrapers to normalize housing listings into SQLite and an OpenAI-backed layer to translate plain-language requests into optimized SQL. The product included authentication, favorites, comparisons, and commute-time visualization.",
   tools: ["React", "Node.js / Express", "SQLite", "OpenAI API"],
   capabilities: ["Authentication", "Favorites", "Comparisons", "Commute-time visualization"],
   stages: [

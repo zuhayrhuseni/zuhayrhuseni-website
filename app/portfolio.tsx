@@ -294,7 +294,7 @@ export function Portfolio() {
             </p>
           </div>
           <div className="interest-list">
-            <p>Professional interests</p>
+            <p>Personal tech interests</p>
             {about.interests.map((interest, index) => <span key={interest}><i>{String(index + 1).padStart(2, "0")}</i>{interest}</span>)}
           </div>
           <div className="personal-list">

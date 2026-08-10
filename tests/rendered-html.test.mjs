@@ -26,6 +26,9 @@ test("server-renders Zuhayr's portfolio shell", async () => {
   assert.match(html, /traveled to 35 countries/i);
   assert.match(html, /French horn in a concert band/i);
   assert.match(html, /YouTube channels, app development, and skiing/i);
+  assert.match(html, /Personal tech interests/i);
+  assert.match(html, /Human-computer interaction[\s\S]*Developer tools[\s\S]*AI-native marketing/i);
+  assert.match(html, /We built this for the University of Connecticut/i);
   assert.match(html, /Forms \+ Surfaces[\s\S]*University of Connecticut/i);
   assert.match(html, /Georgia Institute of Technology[\s\S]*University of Connecticut/i);
   assert.match(html, /Host Family Stay/i);
@@ -48,9 +51,11 @@ test("keeps content typed and removes the starter preview", async () => {
   assert.match(content, /company: "Forms \+ Surfaces"[\s\S]*id: "uconn"/);
   assert.match(page, /<Portfolio \/>/);
   assert.match(layout, /Zuhayr Huseni - Software engineer/);
+  assert.match(layout, /favicon\.svg\?v=2/);
   assert.match(styles, /prefers-reduced-motion: reduce/);
   assert.doesNotMatch(styles, /\.stack-row|\.metric-band|architecture-stage/);
   assert.doesNotMatch(packageJson, /react-loading-skeleton/);
   await assert.rejects(access(new URL("../app/_sites-preview/SkeletonPreview.tsx", import.meta.url)));
   await access(new URL("../public/Zuhayr-Huseni-Resume.pdf", import.meta.url));
+  await access(new URL("../public/brands/propel-flow.png", import.meta.url));
 });

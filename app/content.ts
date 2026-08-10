@@ -34,18 +34,21 @@ export const identity = {
 };
 
 export const hero = {
-  headline: "I build reliable systems for payments, AI, and the people who use them.",
-  dek: "Software engineer at PayPal with experience across distributed systems, developer infrastructure, 5G research, machine learning, and full-stack products.",
+  headline: "Software engineer working across payments, AI, and developer infrastructure.",
+  dek: "At PayPal, I build distributed compliance systems and internal developer tools. My experience also includes 5G research, machine learning, and full-stack products.",
 };
 
 export const about = {
-  title: "Adaptable by experience. Curious by default.",
+  title: "About me.",
   paragraphs: [
-    "My work spans big tech, startups, research, and industrial software. I learn unfamiliar domains quickly and enjoy moving between layers - from distributed services and infrastructure to products and interfaces - to build systems that are reliable, observable, and useful.",
-    "I am interested in technical roles at startups and large technology companies at the forefront of AI, especially AI infrastructure, developer tools, and human-computer interaction.",
+    "I am a software engineer at PayPal focused on distributed compliance systems and internal developer tools. Before PayPal, I worked in 5G research, manufacturing software, machine learning, and full-stack product development.",
+    "I learn new domains quickly and like work that spans infrastructure, backend systems, and product interfaces. I am especially interested in startups and established technology companies working on AI infrastructure, developer tools, and human-computer interaction.",
   ],
   interests: ["AI infrastructure", "Developer tools", "Human-computer interaction", "Distributed systems"],
-  personal: ["Basketball", "35 countries traveled"],
+  personal: [
+    "Outside work, I enjoy playing basketball and have traveled to 35 countries. I also played French horn in a concert band.",
+    "I have tried a wide range of side projects and hobbies, including YouTube channels, app development, and skiing.",
+  ],
   additional: {
     label: "London startup experience",
     company: "Host Family Stay",
@@ -64,7 +67,7 @@ export const experiences: Experience[] = [
     logo: "/brands/paypal.png",
     logoAlt: "PayPal",
     summary:
-      "I build distributed compliance services and developer infrastructure for PayPal's global Suspicious Activity Report platform, where transaction data, security boundaries, and jurisdiction-specific requirements meet.",
+      "I build distributed compliance services and internal developer tools for PayPal's global Suspicious Activity Report platform. The work involves transaction data, secure service boundaries, and jurisdiction-specific requirements.",
     highlights: [
       {
         id: "compliance",
@@ -120,7 +123,7 @@ export const experiences: Experience[] = [
     logo: "/brands/forms-surfaces.png",
     logoAlt: "Forms + Surfaces",
     summary:
-      "I built software for two expensive questions: finding manufacturing data quickly and validating physical designs before they became prototypes.",
+      "I built internal software to help teams retrieve manufacturing data and validate physical designs before prototyping.",
     highlights: [
       {
         id: "erp-search",
@@ -152,7 +155,7 @@ export const experiences: Experience[] = [
     logo: "/brands/uconn.jpg",
     logoAlt: "University of Connecticut",
     summary:
-      "I benchmarked live 5G systems close to the wire, combining repeatable Linux experiments with real-time visualization to find stability and performance bottlenecks.",
+      "I benchmarked live 5G systems through repeatable Linux experiments and real-time visualization, then used the results to identify stability and performance bottlenecks.",
     highlights: [
       {
         id: "benchmarking",
@@ -181,7 +184,7 @@ export const experiences: Experience[] = [
     url: "https://www.linkedin.com/company/propel-flow/",
     monogram: "PF",
     summary:
-      "I moved machine-learning work into client-facing services and improved the retrieval layer behind financial recommendation pipelines.",
+      "I deployed machine-learning services and improved retrieval for financial recommendation pipelines.",
     highlights: [
       {
         id: "inference",

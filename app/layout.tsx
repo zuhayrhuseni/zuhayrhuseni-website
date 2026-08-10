@@ -34,7 +34,7 @@ export async function generateMetadata(): Promise<Metadata> {
           url: `${origin}/og.png`,
           width: 1200,
           height: 630,
-          alt: "Zuhayr Huseni - reliable systems for payments, AI, and the people who use them.",
+          alt: "Zuhayr Huseni - software engineer working across payments, AI, and developer infrastructure.",
         },
       ],
     },

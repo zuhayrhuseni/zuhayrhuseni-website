@@ -298,8 +298,10 @@ export function Portfolio() {
             {about.interests.map((interest, index) => <span key={interest}><i>{String(index + 1).padStart(2, "0")}</i>{interest}</span>)}
           </div>
           <div className="personal-list">
-            <p>Outside work</p>
-            {about.personal.map((interest) => <span key={interest}>{interest}</span>)}
+            <p className="personal-label">Outside work</p>
+            <div className="personal-copy">
+              {about.personal.map((note) => <p key={note}>{note}</p>)}
+            </div>
           </div>
         </motion.div>
       </section>
@@ -311,7 +313,7 @@ export function Portfolio() {
       <section className="contact-section" id="contact" aria-labelledby="contact-title">
         <div className="contact-inner">
           <p className="section-index">05 / CONTACT</p>
-          <h2 id="contact-title">Let&apos;s build what&apos;s next<span className="signal-period">.</span></h2>
+          <h2 id="contact-title">Get in touch<span className="signal-period">.</span></h2>
           <CopyEmailButton />
           <nav className="contact-links" aria-label="Contact links">
             <a href={`mailto:${identity.email}`} data-magnetic data-cursor="EMAIL">Email <span>↗</span></a>

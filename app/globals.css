@@ -9,14 +9,6 @@
 }
 
 @font-face {
-  font-family: "Public Sans Variable";
-  src: url("/fonts/public-sans-latin.woff2") format("woff2");
-  font-style: normal;
-  font-weight: 100 900;
-  font-display: swap;
-}
-
-@font-face {
   font-family: "IBM Plex Mono";
   src: url("/fonts/ibm-plex-mono-400-latin.woff2") format("woff2");
   font-style: normal;
@@ -42,7 +34,7 @@
   --line: rgba(6, 24, 31, 0.2);
   --line-soft: rgba(6, 24, 31, 0.09);
   --display: "Instrument Sans Variable", "Arial Narrow", sans-serif;
-  --body: "Public Sans Variable", Arial, sans-serif;
+  --body: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
   --mono: "IBM Plex Mono", ui-monospace, monospace;
   --page-pad: clamp(1.25rem, 4vw, 4.5rem);
   --max: 1480px;
@@ -278,6 +270,7 @@ button,
 
 .hero-copy {
   align-self: center;
+  min-width: 0;
 }
 
 .hero-title {
@@ -326,6 +319,7 @@ button,
 .signal-shell {
   position: relative;
   align-self: center;
+  min-width: 0;
   border-top: 1px solid var(--line);
   border-bottom: 1px solid var(--line);
   background: var(--white);
@@ -477,7 +471,7 @@ button,
 .section-index,
 .project-period,
 .interest-list > p,
-.personal-list > p,
+.personal-label,
 .diagram-topline,
 .ledger-head {
   margin: 0;
@@ -498,6 +492,7 @@ button,
   font-weight: 680;
   line-height: 0.92;
   letter-spacing: -0.065em;
+  word-spacing: 0.08em;
 }
 
 .about-section {
@@ -506,7 +501,7 @@ button,
 
 .about-grid {
   display: grid;
-  grid-template-columns: minmax(280px, 1.15fr) minmax(210px, 0.58fr) minmax(190px, 0.42fr);
+  grid-template-columns: minmax(280px, 1.15fr) minmax(210px, 0.48fr) minmax(230px, 0.68fr);
   gap: clamp(2rem, 5vw, 5.5rem);
   margin-left: calc(28% + 2rem);
   padding-top: 1.5rem;
@@ -540,18 +535,31 @@ button,
 }
 
 .interest-list > p,
-.personal-list > p {
+.personal-label {
   margin-bottom: 1.3rem;
 }
 
-.interest-list > span,
-.personal-list > span {
+.interest-list > span {
   min-height: 48px;
   display: flex;
   align-items: center;
   gap: 0.8rem;
   border-bottom: 1px solid var(--line-soft);
   font-size: 0.82rem;
+}
+
+.personal-copy {
+  display: grid;
+  gap: 1rem;
+}
+
+.personal-copy p {
+  margin: 0;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--line-soft);
+  color: var(--copy);
+  font-size: 0.88rem;
+  line-height: 1.6;
 }
 
 .interest-list i {
@@ -1404,7 +1412,7 @@ button,
   }
 
   .hero-title {
-    font-size: clamp(3.25rem, 16vw, 4.5rem);
+    font-size: clamp(2.9rem, 14.6vw, 4.2rem);
     line-height: 0.91;
   }
 
@@ -1446,7 +1454,7 @@ button,
   }
 
   .interest-list > p,
-  .personal-list > p {
+  .personal-label {
     margin-top: 1rem;
   }
 

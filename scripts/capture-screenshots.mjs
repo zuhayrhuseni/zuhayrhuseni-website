@@ -31,13 +31,18 @@ for (const viewport of viewports) {
   const pageHealth = await page.evaluate(() => ({
     clientWidth: document.documentElement.clientWidth,
     scrollWidth: document.documentElement.scrollWidth,
+    overflowElements: [...document.querySelectorAll("body *")]
+      .map((element) => ({ element, rect: element.getBoundingClientRect() }))
+      .filter(({ rect }) => rect.left < -1 || rect.right > window.innerWidth + 1)
+      .slice(0, 8)
+      .map(({ element, rect }) => `${element.tagName.toLowerCase()}.${element.className || "no-class"} (${Math.round(rect.left)}..${Math.round(rect.right)})`),
     brokenImages: [...document.images]
       .filter((image) => !image.complete || image.naturalWidth === 0)
       .map((image) => image.currentSrc || image.src),
   }));
 
   if (pageHealth.scrollWidth > pageHealth.clientWidth + 1) {
-    throw new Error(`${viewport.name}: horizontal overflow (${pageHealth.scrollWidth}px > ${pageHealth.clientWidth}px)`);
+    throw new Error(`${viewport.name}: horizontal overflow (${pageHealth.scrollWidth}px > ${pageHealth.clientWidth}px): ${pageHealth.overflowElements.join(", ")}`);
   }
   if (pageHealth.brokenImages.length) {
     throw new Error(`${viewport.name}: broken images: ${pageHealth.brokenImages.join(", ")}`);

@@ -21,8 +21,11 @@ test("server-renders Zuhayr's portfolio shell", async () => {
 
   const html = await response.text();
   assert.match(html, /<title>Zuhayr Huseni - Software engineer<\/title>/i);
-  assert.match(html, /I build reliable systems for payments, AI, and the people who use them/i);
-  assert.match(html, /Adaptable by experience\. Curious by default\./i);
+  assert.match(html, /Software engineer working across payments, AI, and developer infrastructure/i);
+  assert.match(html, /About me\./i);
+  assert.match(html, /traveled to 35 countries/i);
+  assert.match(html, /French horn in a concert band/i);
+  assert.match(html, /YouTube channels, app development, and skiing/i);
   assert.match(html, /Forms \+ Surfaces[\s\S]*University of Connecticut/i);
   assert.match(html, /Georgia Institute of Technology[\s\S]*University of Connecticut/i);
   assert.match(html, /Host Family Stay/i);

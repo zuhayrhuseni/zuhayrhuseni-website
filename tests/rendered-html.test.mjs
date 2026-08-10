@@ -25,6 +25,9 @@ test("server-renders Zuhayr's portfolio shell", async () => {
   assert.match(html, /About me\./i);
   assert.match(html, /traveled to 35 countries/i);
   assert.match(html, /French horn in a concert band/i);
+  assert.match(html, /Greater Boston area[\s\S]*San Francisco Bay Area/i);
+  assert.match(html, /traveled to Japan to perform with the group/i);
+  assert.match(html, /half a year studying in London/i);
   assert.match(html, /YouTube channels, app development, and skiing/i);
   assert.match(html, /Personal tech interests/i);
   assert.match(html, /Human-computer interaction[\s\S]*Developer tools[\s\S]*AI-native marketing/i);

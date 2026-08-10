@@ -41,8 +41,8 @@ export const hero = {
 export const about = {
   title: "About me.",
   paragraphs: [
-    "I am a software engineer at PayPal focused on distributed compliance systems and internal developer tools. Before PayPal, I worked in 5G research, manufacturing software, machine learning, and full-stack product development.",
-    "I learn new domains quickly and like work that spans infrastructure, backend systems, and product interfaces. I am especially interested in startups and established technology companies working on AI infrastructure, developer tools, and human-computer interaction.",
+    "Originally from the Greater Boston area, I now live in the San Francisco Bay Area. I am a software engineer at PayPal focused on distributed compliance systems and internal developer tools.",
+    "Before PayPal, I worked in 5G research, manufacturing software, machine learning, and full-stack product development. I learn new domains quickly and like work that spans infrastructure, backend systems, and product interfaces. I am especially interested in startups and established technology companies working on AI infrastructure, developer tools, and human-computer interaction.",
   ],
   interests: [
     "AI infrastructure",
@@ -52,8 +52,8 @@ export const about = {
     "Distributed systems",
   ],
   personal: [
-    "Outside work, I enjoy playing basketball and have traveled to 35 countries. I also played French horn in a concert band.",
-    "I have tried a wide range of side projects and hobbies, including YouTube channels, app development, and skiing.",
+    "Outside work, I enjoy playing basketball and have traveled to 35 countries. I played French horn in a concert band and traveled to Japan to perform with the group.",
+    "I spent half a year studying in London. I have also tried a wide range of side projects and hobbies, including YouTube channels, app development, and skiing.",
   ],
   additional: {
     label: "London startup experience",

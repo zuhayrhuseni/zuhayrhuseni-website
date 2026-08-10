@@ -21,9 +21,12 @@ test("server-renders Zuhayr's portfolio shell", async () => {
 
   const html = await response.text();
   assert.match(html, /<title>Zuhayr Huseni - Software engineer<\/title>/i);
-  assert.match(html, /I make complex systems easier to observe, test, and trust\./i);
-  assert.match(html, /Secure data paths for global compliance\./i);
+  assert.match(html, /I build reliable systems for payments, AI, and the people who use them/i);
+  assert.match(html, /Adaptable by experience\. Curious by default\./i);
+  assert.match(html, /Forms \+ Surfaces[\s\S]*University of Connecticut/i);
+  assert.match(html, /Georgia Institute of Technology[\s\S]*University of Connecticut/i);
   assert.match(html, /Host Family Stay/i);
+  assert.doesNotMatch(html, /STACK MATRIX|active tool register|register marks/i);
   assert.doesNotMatch(html, /codex-preview|Your site is taking shape|react-loading-skeleton/i);
 });
 
@@ -37,10 +40,13 @@ test("keeps content typed and removes the starter preview", async () => {
   ]);
 
   assert.match(content, /export type Experience/);
-  assert.match(content, /status: "needs-details"/);
+  assert.match(content, /title: "Test-data CLI"/);
+  assert.match(content, /title: "Production operations"/);
+  assert.match(content, /company: "Forms \+ Surfaces"[\s\S]*id: "uconn"/);
   assert.match(page, /<Portfolio \/>/);
   assert.match(layout, /Zuhayr Huseni - Software engineer/);
   assert.match(styles, /prefers-reduced-motion: reduce/);
+  assert.doesNotMatch(styles, /\.stack-row|\.metric-band|architecture-stage/);
   assert.doesNotMatch(packageJson, /react-loading-skeleton/);
   await assert.rejects(access(new URL("../app/_sites-preview/SkeletonPreview.tsx", import.meta.url)));
   await access(new URL("../public/Zuhayr-Huseni-Resume.pdf", import.meta.url));

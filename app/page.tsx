@@ -1,12 +1,12 @@
 import { Portfolio } from "./portfolio";
 import { hero, identity } from "./content";
-import { CursorReticle, ScrollRail, SignalTrace } from "./hero-interactions";
+import { CursorReticle, SignalTrace } from "./hero-interactions";
 
 const navItems = [
-  ["Now", "#now"],
+  ["About", "#about"],
   ["Experience", "#experience"],
-  ["Work", "#work"],
-  ["Stack", "#stack"],
+  ["Education", "#education"],
+  ["Project", "#project"],
   ["Contact", "#contact"],
 ];
 
@@ -15,7 +15,6 @@ export default function Home() {
     <>
       <a className="skip-link" href="#main">Skip to content</a>
       <CursorReticle />
-      <ScrollRail />
       <header className="site-header">
         <a href="#top" className="wordmark" data-magnetic data-cursor="TOP" aria-label="ZH, Zuhayr Huseni, back to top">
           <span>ZH</span><b>Zuhayr Huseni</b>
@@ -23,7 +22,7 @@ export default function Home() {
         <nav aria-label="Primary navigation">
           {navItems.map(([label, href]) => <a key={href} href={href} data-magnetic data-cursor="GO">{label}</a>)}
         </nav>
-        <span className="availability"><i /> SF BAY / 2026</span>
+        <a className="header-resume" href={identity.resume} target="_blank" rel="noreferrer" data-magnetic data-cursor="PDF">Résumé ↗</a>
       </header>
 
       <main id="main">
@@ -32,14 +31,8 @@ export default function Home() {
             <h1 className="hero-title" id="hero-title">
               {hero.headline.replace(/\.$/, "")}<b className="signal-period">.</b>
             </h1>
-            <div className="hero-bottom">
-              <p className="hero-dek">{hero.dek}</p>
-              <div className="hero-meta">
-                <span>ROLE<br /><b>{identity.role}</b></span>
-                <span>BASE<br /><b>{identity.location}</b></span>
-                <span>STATUS<br /><b>{identity.citizenship}</b></span>
-              </div>
-            </div>
+            <p className="hero-dek">{hero.dek}</p>
+            <a className="text-link hero-link" href="#experience" data-magnetic data-cursor="GO">View experience <span aria-hidden="true">→</span></a>
           </div>
           <SignalTrace />
         </section>

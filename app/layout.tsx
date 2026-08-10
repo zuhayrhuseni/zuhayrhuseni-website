@@ -4,7 +4,7 @@ import "./globals.css";
 
 const title = "Zuhayr Huseni - Software engineer";
 const description =
-  "Zuhayr Huseni builds observable distributed systems, developer infrastructure, and real-time network tooling.";
+  "Zuhayr Huseni is a PayPal software engineer building reliable systems across payments, AI infrastructure, developer tooling, and full-stack products.";
 
 export async function generateMetadata(): Promise<Metadata> {
   const requestHeaders = await headers();
@@ -34,7 +34,7 @@ export async function generateMetadata(): Promise<Metadata> {
           url: `${origin}/og.png`,
           width: 1200,
           height: 630,
-          alt: "Zuhayr Huseni - I make complex systems easier to observe, test, and trust.",
+          alt: "Zuhayr Huseni - reliable systems for payments, AI, and the people who use them.",
         },
       ],
     },

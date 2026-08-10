@@ -21,7 +21,31 @@ for (const viewport of viewports) {
     reducedMotion: "reduce",
   });
 
+  const runtimeErrors = [];
+  page.on("pageerror", (error) => runtimeErrors.push(error.message));
+  page.on("console", (message) => {
+    if (message.type() === "error") runtimeErrors.push(message.text());
+  });
+
   await page.goto(url, { waitUntil: "networkidle" });
+  const pageHealth = await page.evaluate(() => ({
+    clientWidth: document.documentElement.clientWidth,
+    scrollWidth: document.documentElement.scrollWidth,
+    brokenImages: [...document.images]
+      .filter((image) => !image.complete || image.naturalWidth === 0)
+      .map((image) => image.currentSrc || image.src),
+  }));
+
+  if (pageHealth.scrollWidth > pageHealth.clientWidth + 1) {
+    throw new Error(`${viewport.name}: horizontal overflow (${pageHealth.scrollWidth}px > ${pageHealth.clientWidth}px)`);
+  }
+  if (pageHealth.brokenImages.length) {
+    throw new Error(`${viewport.name}: broken images: ${pageHealth.brokenImages.join(", ")}`);
+  }
+  if (runtimeErrors.length) {
+    throw new Error(`${viewport.name}: browser errors: ${runtimeErrors.join(" | ")}`);
+  }
+
   await page.screenshot({
     path: resolve(outputDir, `${viewport.name}.png`),
     fullPage: true,

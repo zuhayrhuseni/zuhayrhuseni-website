@@ -23,6 +23,8 @@ test("server-renders Zuhayr's portfolio shell", async () => {
   assert.match(html, /<title>Zuhayr Huseni - Software engineer<\/title>/i);
   assert.match(html, /Software engineer working across payments, AI, and developer infrastructure/i);
   assert.match(html, /About me\./i);
+  assert.match(html, /src="\/zuhayr-huseni\.jpeg"/i);
+  assert.match(html, /alt="Zuhayr Huseni at his graduation"/i);
   assert.match(html, /full-stack products[\s\S]*AI-powered CRM automation/i);
   assert.match(html, /sales automation software for an industrial engineering company/i);
   assert.doesNotMatch(html, /manufacturing software/i);
@@ -66,6 +68,7 @@ test("keeps content typed and removes the starter preview", async () => {
   assert.doesNotMatch(packageJson, /react-loading-skeleton/);
   await assert.rejects(access(new URL("../app/_sites-preview/SkeletonPreview.tsx", import.meta.url)));
   await access(new URL("../public/Zuhayr-Huseni-Resume.pdf", import.meta.url));
+  await access(new URL("../public/zuhayr-huseni.jpeg", import.meta.url));
   await access(new URL("../public/favicon-32x32.png", import.meta.url));
   await access(new URL("../public/favicon.ico", import.meta.url));
   await access(new URL("../public/apple-touch-icon.png", import.meta.url));

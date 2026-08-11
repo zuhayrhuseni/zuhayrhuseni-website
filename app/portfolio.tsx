@@ -287,6 +287,16 @@ export function Portfolio() {
       <section className="section about-section" id="about" aria-labelledby="about-title">
         <SectionTitle index="01" label="ABOUT" title={about.title} />
         <motion.div className="about-grid" {...reveal}>
+          <figure className="about-portrait">
+            <img
+              src="/zuhayr-huseni.jpeg"
+              alt="Zuhayr Huseni at his graduation"
+              width="724"
+              height="1086"
+              loading="lazy"
+              decoding="async"
+            />
+          </figure>
           <div className="about-narrative">
             {about.paragraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
             <p className="additional-experience">

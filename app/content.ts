@@ -218,7 +218,7 @@ export const education = [
   {
     school: "Georgia Institute of Technology",
     degree: "M.S. Computer Science · Machine Learning specialization",
-    period: "Incoming Fall 2026 · Expected 2028",
+    period: "2026 · Expected 2028",
     detail: "Online program alongside full-time engineering work.",
     url: "https://www.omscs.gatech.edu/",
     logo: "/brands/georgia-tech.png",
